@@ -59,8 +59,8 @@ random.shuffle(players)													#random order each game
 #Creating cards and card decks
 play_deck = []															#created once, copied to active_deck each round
 for key in Card.points.keys():
-    for suit in Card.suit_names.keys():
-        play_deck.append(Card(key, suit))
+	for suit in Card.suit_names.keys():
+		play_deck.append(Card(key, suit))
         
 queen_cards = gf.make_queen_cards(screen_rect)							#additional cards for queens cards
 
