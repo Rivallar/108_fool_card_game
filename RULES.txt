@@ -1,0 +1,96 @@
+----------------------------------108 fool------------------------------------
+
+These game is similiar to UNO card game, but is played with classical
+game cards and consists of several rounds.
+A round ends when any player has no cards remaining in his hand. Other players
+then count their round points based on cards they have at the end of the round.
+This round points sum with results of previous rounds in a total score for each
+player. First player who gets in total 108 points (you can set another value)
+loses the game.
+
+The more cards you have at the end of a round the more points you`ll get. So
+your main goal is to get rid of as many cards as possible during a round!!!
+
+There may be several losers if they reached this value at the end of the same
+round.
+Also if you want to start next game instantly, it will last till the highest
+score of a loser from previous game. For example there were 2 losers with 109
+and 117 points. New game will go till 117 points.
+
+ROUND rules:
+Players begin each round with 5 cards in hand.
+First turn of every round is performed by a different player (one by one).
+A card for the first  turn is chosen randomly from a hand of the first player.
+So he goes first but can not choose a card.
+
+Next player may use one of his cards meeting the requirements of the rules:
+card suit or the value of the card must be same with the previously used
+card. For example previous player used card "10 of diamonds". You can use any
+card with diamond suit or 10 of any other suit.
+If a player has no appropriate card in hand or he don`t want to use it,
+he should draw one card from a deck. Then he can either use a card (any card
+meeting the rules) or pass his turn to the next player.
+
+When your hand is almost dry (one or two cards), there will appear a new button
+with "One!" message on it. Don`t forget to push it every time! It informs other
+players that you are close to finish this round (just like in UNO game). 
+If you have finished a round and forgot to push the button you shall be "rewarded"
+with penalty points!
+
+When a round lasts too long there may be situation when you need to draw a card from
+a deck, but the deck is dry. In this case the deck will be replenished again with used
+cards and you shall earn penalty points for such replenishment.
+Each replenishment causes more and more penalty points!
+  
+
+CARDS:
+Each card has its "cost" - the amount of points to get at the end of a round.
+Also many cards have special properties affecting game progress.
+Lets review cards in depth:
+
+6 	- costs six points. If a player uses this card, next player must draw two cards
+	from a deck and pass his turn (he won`t be able to use his cards this time).
+7 	- costs seven points. If a player uses this card, next player must draw one card
+	from a deck and pass his turn (he won`t be able to use his cards this time).
+8 	- costs eight points. No special rules for this card.
+9 	- costs zero points. Reverses turn direction untill the end of a round or untill
+	another 9 is used. F.e. next player to make a turn is sitting left to you
+	(so your order of turns is clockwise). You use a 9-card and the turn order
+	reverts to counter-clockwise. Next player to go is to the right of you now.
+10 	- costs ten points. No special rules.
+(J)ack  - costs two points. No special rules.
+(Q)ueen - costs three points. Has a bit complicated rules. See special section below.
+(K)ing  - costs four points. No special rules.
+(A)ce   - costs eleven points. If a player uses this card, next player must pass his
+	turn without using any cards.
+
+QUEENS:
+Queen is the most usefull card in the game, but may cause a lot of harm if used poorly.
+If it is your turn, you can use any queen card regardless of a card used before it: f.e.
+previously used card was "Jack of Spades" (or ANY other) and you can still go with your
+"Queen of Hearts" (normally you must use only Spades cards or Jacks on top of "Jack of 
+Spades").
+Queens also able to change card suits: after using a queen you shall be asked to choose
+a new card suit - four additional cards representing each suit will be displayed on your
+screen. So after using your "Queen of Hearts" you may choose Clubs suit, because you
+have a lot of Clubs cards in your hand. Next player will have to use only Clubs cards or
+another queen to change suits again.
+
+Thats not it yet!
+Normally Queens cost 3 points at the end of a round (when you have several cards in hand).
+BUT!: if another player finishes a round and you only have a single queen in hand it will
+cost you 20 points (and even 40 points if it is "Queen of Spades")!
+FINALLY: if YOU finish a round and the last card you used was a queen, you will be rewarded
+with a 20 points (40 for the "Queen of Spades") discount, i.e. you`ll get -20 or -40 points
+for these round.
+So keeping a queen at the end of a round is always a risk. You may be punished or rewarded
+for it. Choose wisely!
+
+CONTROLS:
+- use ENTER to make your turn
+- use SPACE to draw a card from a deck or to pass your turn
+- use left/right arrow to navigate through cards in your hand
+- use mouse to choose special queen card
+- use mouse or hotkeys to push in-game buttons
+
+Thats all for the rules! Hope everything is clear now and you can play the game.
