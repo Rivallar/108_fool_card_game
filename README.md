@@ -1,4 +1,4 @@
-# 108_fool_card_game
+# :clubs:108_fool_card_game:hearts:
 
 ### Description
 
