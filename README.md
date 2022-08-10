@@ -22,4 +22,13 @@ To run the game you only need Python3 with Pygame module installed
 Clone the project to your PC and enter its folder name  
 Run command: `python3 fool_108_main.py`  
 
-#### There is also a RULES file inside.
+#### There is also a [RULES](https://github.com/Rivallar/108_fool_card_game/blob/main/RULES.txt) file inside.
+
+### Screens:
+
+![Start](https://github.com/Rivallar/108_fool_card_game/blob/main/ScreenShots/start_screen.PNG)
+![Game](https://github.com/Rivallar/108_fool_card_game/blob/main/ScreenShots/game1.PNG)
+![One_Card!](https://github.com/Rivallar/108_fool_card_game/blob/main/ScreenShots/one_card.PNG)
+![Queens](https://github.com/Rivallar/108_fool_card_game/blob/main/ScreenShots/queens.PNG)
+![game_over](https://github.com/Rivallar/108_fool_card_game/blob/main/ScreenShots/game_over.PNG)
+
