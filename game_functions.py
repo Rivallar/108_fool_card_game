@@ -10,33 +10,33 @@ from ui import draw_end_round_screen
 # --------------------------------------Start screen management--------------------------------------
 
 
-def start_screen_events(st_screen, quit_but, play_but, username_field):
+def start_screen_events(screen_props, quit_but, play_but, username_field):
     """Events of start screen. Manage buttons usage and username input. """
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q and not st_screen.name_focus:
+            if event.key == pygame.K_q and not screen_props.name_focus:
                 sys.exit()
             if event.key == pygame.K_RETURN:  # start game after username is entered
-                check_name_and_start(st_screen)
-            if st_screen.name_focus:
+                check_name_and_start(screen_props)
+            if screen_props.name_focus:
                 if event.key == pygame.K_BACKSPACE:  # erase symbol
-                    st_screen.username_str = st_screen.username_str[:-1]
+                    screen_props.username_str = screen_props.username_str[:-1]
                 elif event.key == pygame.K_RETURN:
-                    check_name_and_start(st_screen)
+                    check_name_and_start(screen_props)
                 else:
-                    st_screen.username_str += event.unicode  # add symbol
+                    screen_props.username_str += event.unicode  # add symbol
         if event.type == pygame.MOUSEBUTTONDOWN:
             if quit_but.rect.collidepoint(event.pos):
                 sys.exit()
             elif play_but.rect.collidepoint(event.pos):
-                check_name_and_start(st_screen)
+                check_name_and_start(screen_props)
             elif username_field.collidepoint(event.pos):
-                st_screen.name_focus = True
+                screen_props.name_focus = True
             else:
-                st_screen.name_focus = False
+                screen_props.name_focus = False
 
 
 def check_name_and_start(st_screen):

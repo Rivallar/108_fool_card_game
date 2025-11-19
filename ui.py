@@ -3,22 +3,21 @@ import pygame
 import game_settings
 
 
-def draw_start_screen(screen, screen_rect, st_screen, yellow_rect,
-                      yellow_rect2, play_but, quit_but):
+def draw_start_screen(screen, screen_rect, st_screen):
 
     """Draws everything for start screen."""
 
-    screen.fill(st_screen.start_screen_color)
-    screen.fill(st_screen.text_color, yellow_rect)  # button contours
-    screen.fill(st_screen.text_color, yellow_rect2)
-    play_but.draw_button()
-    quit_but.draw_button()
-    draw_text_line(st_screen.header_font, st_screen.big_header,
-                   st_screen.text_color, screen_rect.centerx - 150, 70, screen)
-    draw_text_line(st_screen.hint_font, 'Enter your name: ',
-                   st_screen.text_color, screen_rect.centerx - 300, 200, screen)
-    for ind, hint in enumerate(st_screen.hints):  # hints to play a game
-        draw_text_line(st_screen.hint_font, hint, st_screen.text_color,
+    screen.fill(st_screen.props.start_screen_color)
+    screen.fill(st_screen.props.text_color, st_screen.quit_but_border)  # button contours
+    screen.fill(st_screen.props.text_color, st_screen.play_but_border)
+    st_screen.play_but.draw_button()
+    st_screen.quit_but.draw_button()
+    draw_text_line(st_screen.props.header_font, st_screen.props.big_header,
+                   st_screen.props.text_color, screen_rect.centerx - 150, 70, screen)
+    draw_text_line(st_screen.props.hint_font, 'Enter your name: ',
+                   st_screen.props.text_color, screen_rect.centerx - 300, 200, screen)
+    for ind, hint in enumerate(st_screen.props.hints):  # hints to play a game
+        draw_text_line(st_screen.props.hint_font, hint, st_screen.props.text_color,
                        screen_rect.left + 50, screen_rect.bottom - 50 - ind * 50, screen)
 
 

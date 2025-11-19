@@ -276,3 +276,16 @@ class StartScreenProperties:
 			'> Use arrows to navigate through your cards',
 			'> Press ENTER button to use the selected card',
 			'> SPACE BAR to draw a card or pass your turn']
+
+
+class StartScreen:
+	def __init__(self, screen_rect, screen):
+		self.props = StartScreenProperties()
+		self.username_field = pygame.Rect(screen_rect.centerx - 50, 175, 350, 50)
+		self.username_field_border = pygame.Rect(self.username_field.left - 2, self.username_field.top - 2, 354, 54)
+		self.quit_but_border = pygame.Rect(screen_rect.centerx + 100, screen_rect.centery - 100, 100, 50)
+		self.quit_but = Button(screen, 'Quit', self.quit_but_border.width - 4, self.quit_but_border.height - 4, (20, 20, 20), (240, 240, 0))
+		self.quit_but.reposition(self.quit_but_border.centerx - screen_rect.centerx, self.quit_but_border.centery - screen_rect.centery)
+		self.play_but_border = pygame.Rect(screen_rect.centerx - 100, screen_rect.centery - 100, 100, 50)
+		self.play_but = Button(screen, 'Play', self.play_but_border.width - 4, self.play_but_border.height - 4, (20, 20, 20), (240, 240, 0))
+		self.play_but.reposition(self.play_but_border.centerx - screen_rect.centerx, self.play_but_border.centery - screen_rect.centery)
