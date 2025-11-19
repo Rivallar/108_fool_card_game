@@ -13,7 +13,7 @@ def bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags):
     for card in queen_cards:
         if card.suit == most_expensive_card.suit:
             chosen_queen_card = card
-    used_deck.cards.append(chosen_queen_card)
+            used_deck.cards.append(chosen_queen_card)
     flags.queen_choose_flag = False
     flags.first_turn_flag = False
 
