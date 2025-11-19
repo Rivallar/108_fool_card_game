@@ -3,6 +3,7 @@ import pygame.font
 import random
 from game_classes import Player, Card, Deck, Turn, GameFlags, Button, StartScreenProperties
 import game_functions as gf
+import bot
 
 
 # --------------------------------------------Start-game preparations-------------------------
@@ -87,7 +88,7 @@ gf.make_first_turn(turn, players, flags, active_deck, used_deck,
 while True:
 
     if turn.player.bot and not flags.game_over_flag:
-        gf.bot_turn(turn, bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
+        bot.bot_turn(turn, bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
                     queen_cards, cancel_button, one_card_button)
 
     else:
