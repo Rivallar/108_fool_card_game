@@ -271,28 +271,30 @@ class StartScreenProperties:
 
 class StartScreen:
 
-    def __init__(self, screen_rect, screen):
+    def __init__(self, screen):
         self.props = StartScreenProperties()
-        self.username_field = pygame.Rect(screen_rect.centerx - 50, 175, 350, 50)
+        self.screen = screen
+        self.screen_rect = self.screen.get_rect()
+        self.username_field = pygame.Rect(self.screen_rect.centerx - 50, 175, 350, 50)
         self.username_field_border = pygame.Rect(self.username_field.left - 2, self.username_field.top - 2, 354, 54)
-        self.quit_but_border = pygame.Rect(screen_rect.centerx + 100, screen_rect.centery - 100, 100, 50)
+        self.quit_but_border = pygame.Rect(self.screen_rect.centerx + 100, self.screen_rect.centery - 100, 100, 50)
         self.quit_but = Button(screen=screen,
                                msg='Quit',
                                width=self.quit_but_border.width - 4,
                                height=self.quit_but_border.height - 4,
                                button_color=self.props.button_color,
                                text_color=self.props.text_color,
-                               shift=self.get_shift(screen_rect, self.quit_but_border)
+                               shift=self.get_shift(self.screen_rect, self.quit_but_border)
                                )
 
-        self.play_but_border = pygame.Rect(screen_rect.centerx - 100, screen_rect.centery - 100, 100, 50)
+        self.play_but_border = pygame.Rect(self.screen_rect.centerx - 100, self.screen_rect.centery - 100, 100, 50)
         self.play_but = Button(screen=screen,
                                msg='Play',
                                width=self.play_but_border.width - 4,
                                height=self.play_but_border.height - 4,
                                button_color=self.props.button_color,
                                text_color=self.props.text_color,
-                               shift=self.get_shift(screen_rect, self.play_but_border)
+                               shift=self.get_shift(self.screen_rect, self.play_but_border)
                                )
 
     @staticmethod
@@ -304,6 +306,8 @@ class StartScreen:
 
 class GameScreen:
     def __init__(self, screen):
+        self.screen = screen
+        self.screen_rect = self.screen.get_rect()
         self.bg_color = (87, 168, 88)
         self.back_img = pygame.image.load('Cards_70x105/back.bmp')
         self.right_arrow = pygame.image.load('Cards_70x105/arrow.png')

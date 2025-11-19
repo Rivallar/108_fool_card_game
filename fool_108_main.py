@@ -16,12 +16,12 @@ screen_rect = screen.get_rect()
 
 # ------------------------------------------Start screen (to enter username)---------------------------------------
 
-st_screen = StartScreen(screen_rect, screen)
+st_screen = StartScreen(screen)
 
 while st_screen.props.start_screen_flag:
 
     gf.start_screen_events(st_screen.props, st_screen.quit_but, st_screen.play_but, st_screen.username_field)
-    ui.draw_start_screen(screen, screen_rect, st_screen)
+    ui.draw_start_screen(st_screen)
 
     if st_screen.props.name_focus:
         screen.fill(st_screen.props.text_color, st_screen.username_field_border)
@@ -66,17 +66,16 @@ gf.make_first_turn(turn, players, flags, active_deck, used_deck,
 while True:
 
     if turn.player.bot and not flags.game_over_flag:
-        bot.bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags,
+        bot.bot_turn(turn, players, used_deck, active_deck, flags,
                      queen_cards, g_screen)
 
     else:
         gf.check_events(turn, used_deck, players, flags, active_deck, queen_cards, g_screen, play_deck)
 
     if not flags.end_game_flag:
-        ui.draw_everything(screen_rect, screen, players, used_deck, active_deck, flags,
-                           queen_cards, g_screen)
+        ui.draw_everything(players, used_deck, active_deck, flags, queen_cards, g_screen)
 
     elif flags.game_over_flag:
-        ui.draw_end_game_screen(screen_rect, screen, players, flags, g_screen)
+        ui.draw_end_game_screen(players, flags, g_screen)
     else:
         gf.new_round(play_deck, active_deck, used_deck, players, queen_cards, flags, turn, screen_rect, screen)

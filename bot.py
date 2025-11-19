@@ -18,7 +18,7 @@ def bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags):
     flags.first_turn_flag = False
 
 
-def bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags, queen_cards,
+def bot_turn(turn, players, used_deck, active_deck, flags, queen_cards,
              game_screen):
 
     """Main logic for bot turn."""
@@ -26,7 +26,7 @@ def bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags, 
     turn.player.hand[0].focus = False
     turn.player.one_card_flag = True
 
-    bot_imitates_human(screen_rect, screen, players,  # just delay to see each step of a turn
+    bot_imitates_human(players,  # just delay to see each step of a turn
                        used_deck, active_deck, flags, queen_cards,
                        game_screen)
 
@@ -34,7 +34,7 @@ def bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags, 
     if not useful_cards:  # draw a card and check again
         turn.player.take_card(active_deck, used_deck, queen_cards, flags)
 
-        bot_imitates_human(screen_rect, screen, players,
+        bot_imitates_human(players,
                            used_deck, active_deck, flags,
                            queen_cards, game_screen)
 
@@ -45,20 +45,20 @@ def bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags, 
     else:  # make turn
         best_card.focus = True
 
-        bot_imitates_human(screen_rect, screen, players,
+        bot_imitates_human(players,
                            used_deck, active_deck, flags, queen_cards,
                            game_screen)
 
         turn.focus_index = turn.player.hand.index(best_card)
         if best_card.value == 'Q':
-            bot_uses_queen(turn, screen_rect, screen, players,
+            bot_uses_queen(turn, players,
                            used_deck, active_deck, flags,
                            queen_cards, game_screen)
         else:
             make_turn(turn, players, flags, active_deck, used_deck, queen_cards)
 
 
-def bot_uses_queen(turn, screen_rect, screen, players,
+def bot_uses_queen(turn, players,
                    used_deck, active_deck, flags, queen_cards,
                    game_screen):
 
@@ -68,18 +68,18 @@ def bot_uses_queen(turn, screen_rect, screen, players,
     make_turn(turn, players, flags, active_deck, used_deck, queen_cards)
     bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags)
     if not flags.end_game_flag:
-        bot_imitates_human(screen_rect, screen, players,
+        bot_imitates_human(players,
                            used_deck, active_deck, flags, queen_cards,
                            game_screen)
 
     end_turn(turn, players, flags)
 
 
-def bot_imitates_human(screen_rect, screen, players, used_deck, active_deck, flags, queen_cards,
+def bot_imitates_human(players, used_deck, active_deck, flags, queen_cards,
                        g_screen):
 
     """Just a delay as if human thinking."""
 
-    draw_everything(screen_rect, screen, players, used_deck, active_deck, flags, queen_cards,
+    draw_everything(players, used_deck, active_deck, flags, queen_cards,
                     g_screen)
     sleep(game_settings.bot_turn_sleep)

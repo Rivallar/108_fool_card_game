@@ -3,22 +3,22 @@ import pygame
 import game_settings
 
 
-def draw_start_screen(screen, screen_rect, st_screen):
+def draw_start_screen(st_screen):
 
     """Draws everything for start screen."""
 
-    screen.fill(st_screen.props.start_screen_color)
-    screen.fill(st_screen.props.text_color, st_screen.quit_but_border)  # button contours
-    screen.fill(st_screen.props.text_color, st_screen.play_but_border)
+    st_screen.screen.fill(st_screen.props.start_screen_color)
+    st_screen.screen.fill(st_screen.props.text_color, st_screen.quit_but_border)  # button contours
+    st_screen.screen.fill(st_screen.props.text_color, st_screen.play_but_border)
     st_screen.play_but.draw_button()
     st_screen.quit_but.draw_button()
     draw_text_line(st_screen.props.header_font, st_screen.props.big_header,
-                   st_screen.props.text_color, screen_rect.centerx - 150, 70, screen)
+                   st_screen.props.text_color, st_screen.screen_rect.centerx - 150, 70, st_screen.screen)
     draw_text_line(st_screen.props.hint_font, 'Enter your name: ',
-                   st_screen.props.text_color, screen_rect.centerx - 300, 200, screen)
+                   st_screen.props.text_color, st_screen.screen_rect.centerx - 300, 200, st_screen.screen)
     for ind, hint in enumerate(st_screen.props.hints):  # hints to play a game
         draw_text_line(st_screen.props.hint_font, hint, st_screen.props.text_color,
-                       screen_rect.left + 50, screen_rect.bottom - 50 - ind * 50, screen)
+                       st_screen.screen_rect.left + 50, st_screen.screen_rect.bottom - 50 - ind * 50, st_screen.screen)
 
 
 def draw_used_deck(deck, screen_rect, screen):
@@ -197,33 +197,33 @@ def draw_loose_score(screen_rect, screen, flags):
     screen.blit(flags.loose_score_img, flags.loose_score_rect)
 
 
-def draw_everything(screen_rect, screen, players, used_deck,
+def draw_everything(players, used_deck,
                     active_deck, flags, queen_cards, game_screen):
 
     """Main drawing function. Delegate tasks to other functions"""
 
-    screen.fill(game_screen.bg_color)
-    draw_hands(screen_rect, screen, players, game_screen.back_img, game_screen.one_card_button)
-    draw_used_deck(used_deck, screen_rect, screen)
-    draw_active_deck(game_screen.back_img, screen_rect, screen, active_deck)
-    draw_arrow(game_screen.right_arrow, flags, screen_rect, screen)
-    draw_loose_score(screen_rect, screen, flags)
+    game_screen.screen.fill(game_screen.bg_color)
+    draw_hands(game_screen.screen_rect, game_screen.screen, players, game_screen.back_img, game_screen.one_card_button)
+    draw_used_deck(used_deck, game_screen.screen_rect, game_screen.screen)
+    draw_active_deck(game_screen.back_img, game_screen.screen_rect, game_screen.screen, active_deck)
+    draw_arrow(game_screen.right_arrow, flags, game_screen.screen_rect, game_screen.screen)
+    draw_loose_score(game_screen.screen_rect, game_screen.screen, flags)
 
     if flags.queen_choose_flag:
-        draw_queen_cards(queen_cards, screen_rect, screen)
+        draw_queen_cards(queen_cards, game_screen.screen_rect, game_screen.screen)
         if not flags.first_turn_flag:  # at first turn you can`t cancel your choice
             game_screen.cancel_button.draw_button()
 
     pygame.display.flip()
 
 
-def draw_end_game_screen(screen_rect, screen, players, flags, game_screen):
-    screen.fill(game_screen.bg_color)
+def draw_end_game_screen(players, flags, game_screen):
+    game_screen.screen.fill(game_screen.bg_color)
 
     """Main drawing function for an end-game screen. Delegates sub-tasks to other functions"""
 
-    draw_result_points(players, screen_rect, screen, flags.losers)
-    draw_loose_score(screen_rect, screen, flags)
+    draw_result_points(players, game_screen.screen_rect, game_screen.screen, flags.losers)
+    draw_loose_score(game_screen.screen_rect, game_screen.screen, flags)
 
     game_screen.play_again_button.draw_button()
     game_screen.quit_button.draw_button()
