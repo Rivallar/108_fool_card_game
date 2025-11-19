@@ -319,7 +319,7 @@ def queen_turn(turn, used_deck, players, flags, queen_cards, cancel_button, mous
 
 
 def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
-                 cancel_button, one_card_button, quit_button, play_again_button, play_deck):
+                 game_screen, play_deck):
 
     """Main event function. Looks for players keyboard/mouse actions"""
 
@@ -333,14 +333,14 @@ def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 queen_turn(turn, used_deck, players, flags, queen_cards,
-                           cancel_button, mouse_x, mouse_y)
+                           game_screen.cancel_button, mouse_x, mouse_y)
 
         if flags.game_over_flag:  # when game is over
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if quit_button.rect.collidepoint(mouse_x, mouse_y):
+                if game_screen.quit_button.rect.collidepoint(mouse_x, mouse_y):
                     sys.exit()
-                if play_again_button.rect.collidepoint(mouse_x, mouse_y):
+                if game_screen.play_again_button.rect.collidepoint(mouse_x, mouse_y):
                     new_game(players, play_deck, active_deck, used_deck,
                              queen_cards, flags, turn)
             elif event.type == pygame.KEYDOWN:
@@ -372,6 +372,6 @@ def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if one_card_button.rect.collidepoint(mouse_x, mouse_y):  # push one-card button
+                if game_screen.one_card_button.rect.collidepoint(mouse_x, mouse_y):  # push one-card button
                     if len(turn.player.hand) == 2 and not turn.player.one_card_flag:
                         turn.player.one_card_flag = True

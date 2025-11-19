@@ -1,7 +1,7 @@
 import pygame
 import pygame.font
 import random
-from game_classes import Player, Card, Deck, Turn, GameFlags, Button, StartScreen, GameScreen
+from game_classes import Player, Card, Deck, Turn, GameFlags, StartScreen, GameScreen
 import game_functions as gf
 import bot
 import ui
@@ -11,9 +11,6 @@ pygame.init()
 screen = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption('108_fool')
 g_screen = GameScreen(screen)
-bg_color = (87, 168, 88)
-back_img = pygame.image.load('Cards_70x105/back.bmp')
-right_arrow = pygame.image.load('Cards_70x105/arrow.png')
 
 screen_rect = screen.get_rect()
 
@@ -53,16 +50,6 @@ queen_cards = gf.make_queen_cards(screen_rect)  # additional cards for queens ca
 active_deck = Deck()
 used_deck = Deck()
 
-# Creating button objects
-cancel_button = Button(screen, 'Cancel', 200, 50, (255, 0, 0))
-one_card_button = Button(screen, 'One!', 100, 50, (255, 0, 0))
-
-play_again_button = Button(screen, 'Play again', 200, 50, (255, 0, 0))
-play_again_button.reposition(-70, 50)
-
-quit_button = Button(screen, 'Quit', 100, 60, (255, 0, 0))
-quit_button.reposition(150, 50)
-
 flags = GameFlags()
 
 # --------------------------------------------Start-round preparations---------------------------------
@@ -83,8 +70,7 @@ while True:
                      queen_cards, g_screen)
 
     else:
-        gf.check_events(turn, used_deck, players, flags, active_deck, queen_cards, cancel_button, one_card_button,
-                        quit_button, play_again_button, play_deck)
+        gf.check_events(turn, used_deck, players, flags, active_deck, queen_cards, g_screen, play_deck)
 
     if not flags.end_game_flag:
         ui.draw_everything(screen_rect, screen, players, used_deck, active_deck, flags,
