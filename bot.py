@@ -1,7 +1,8 @@
 from time import sleep
 
 import game_settings
-from game_functions import end_turn, make_turn, draw_everything
+from game_functions import end_turn, make_turn
+from ui import draw_everything
 
 
 def bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags):

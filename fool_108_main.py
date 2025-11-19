@@ -4,6 +4,7 @@ import random
 from game_classes import Player, Card, Deck, Turn, GameFlags, Button, StartScreenProperties
 import game_functions as gf
 import bot
+import ui
 
 
 # --------------------------------------------Start-game preparations-------------------------
@@ -34,13 +35,13 @@ play_but.reposition(yellow_rect2.centerx - screen_rect.centerx, yellow_rect2.cen
 while st_screen.start_screen_flag:
 
     gf.start_screen_events(st_screen, quit_but, play_but, username_field)
-    gf.draw_start_screen(screen, screen_rect, st_screen, yellow_rect, yellow_rect2, play_but, quit_but)
+    ui.draw_start_screen(screen, screen_rect, st_screen, yellow_rect, yellow_rect2, play_but, quit_but)
 
     if st_screen.name_focus:
         screen.fill(st_screen.text_color, username_field_border)
     screen.fill((75, 75, 75), username_field)
 
-    gf.draw_text_line(st_screen.hint_font, st_screen.username_str, st_screen.text_color, username_field.left + 2,
+    ui.draw_text_line(st_screen.hint_font, st_screen.username_str, st_screen.text_color, username_field.left + 2,
                       username_field.centery, screen)
 
     pygame.display.flip()
@@ -96,10 +97,10 @@ while True:
                         quit_button, play_again_button, play_deck)
 
     if not flags.end_game_flag:
-        gf.draw_everything(bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
+        ui.draw_everything(bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
                            queen_cards, cancel_button, one_card_button)
 
     elif flags.game_over_flag:
-        gf.draw_end_game_screen(bg_color, screen_rect, screen, players, flags, play_again_button, quit_button)
+        ui.draw_end_game_screen(bg_color, screen_rect, screen, players, flags, play_again_button, quit_button)
     else:
         gf.new_round(play_deck, active_deck, used_deck, players, queen_cards, flags, turn, screen_rect, screen)
