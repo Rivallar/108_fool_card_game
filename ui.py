@@ -197,22 +197,22 @@ def draw_loose_score(screen_rect, screen, flags):
     screen.blit(flags.loose_score_img, flags.loose_score_rect)
 
 
-def draw_everything(bg_color, screen_rect, screen, players, back_img, used_deck,
-                    active_deck, right_arrow, flags, queen_cards, cancel_button, one_card_button):
+def draw_everything(screen_rect, screen, players, used_deck,
+                    active_deck, flags, queen_cards, game_screen):
 
     """Main drawing function. Delegate tasks to other functions"""
 
-    screen.fill(bg_color)
-    draw_hands(screen_rect, screen, players, back_img, one_card_button)
+    screen.fill(game_screen.bg_color)
+    draw_hands(screen_rect, screen, players, game_screen.back_img, game_screen.one_card_button)
     draw_used_deck(used_deck, screen_rect, screen)
-    draw_active_deck(back_img, screen_rect, screen, active_deck)
-    draw_arrow(right_arrow, flags, screen_rect, screen)
+    draw_active_deck(game_screen.back_img, screen_rect, screen, active_deck)
+    draw_arrow(game_screen.right_arrow, flags, screen_rect, screen)
     draw_loose_score(screen_rect, screen, flags)
 
     if flags.queen_choose_flag:
         draw_queen_cards(queen_cards, screen_rect, screen)
         if not flags.first_turn_flag:  # at first turn you can`t cancel your choice
-            cancel_button.draw_button()
+            game_screen.cancel_button.draw_button()
 
     pygame.display.flip()
 

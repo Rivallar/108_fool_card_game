@@ -6,7 +6,6 @@ import game_functions as gf
 import bot
 import ui
 
-
 # --------------------------------------------Start-game preparations-------------------------
 pygame.init()
 screen = pygame.display.set_mode((1200, 800))
@@ -31,7 +30,8 @@ while st_screen.props.start_screen_flag:
         screen.fill(st_screen.props.text_color, st_screen.username_field_border)
     screen.fill((75, 75, 75), st_screen.username_field)
 
-    ui.draw_text_line(st_screen.props.hint_font, st_screen.props.username_str, st_screen.props.text_color, st_screen.username_field.left + 2,
+    ui.draw_text_line(st_screen.props.hint_font, st_screen.props.username_str, st_screen.props.text_color,
+                      st_screen.username_field.left + 2,
                       st_screen.username_field.centery, screen)
 
     pygame.display.flip()
@@ -79,16 +79,16 @@ gf.make_first_turn(turn, players, flags, active_deck, used_deck,
 while True:
 
     if turn.player.bot and not flags.game_over_flag:
-        bot.bot_turn(turn, bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
-                    queen_cards, cancel_button, one_card_button)
+        bot.bot_turn(turn, screen_rect, screen, players, used_deck, active_deck, flags,
+                     queen_cards, g_screen)
 
     else:
         gf.check_events(turn, used_deck, players, flags, active_deck, queen_cards, cancel_button, one_card_button,
                         quit_button, play_again_button, play_deck)
 
     if not flags.end_game_flag:
-        ui.draw_everything(bg_color, screen_rect, screen, players, back_img, used_deck, active_deck, right_arrow, flags,
-                           queen_cards, cancel_button, one_card_button)
+        ui.draw_everything(screen_rect, screen, players, used_deck, active_deck, flags,
+                           queen_cards, g_screen)
 
     elif flags.game_over_flag:
         ui.draw_end_game_screen(screen_rect, screen, players, flags, g_screen)
