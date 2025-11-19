@@ -1,7 +1,7 @@
 import pygame
 import pygame.font
 import random
-from game_classes import Player, Card, Deck, Turn, GameFlags, Button, StartScreen
+from game_classes import Player, Card, Deck, Turn, GameFlags, Button, StartScreen, GameScreen
 import game_functions as gf
 import bot
 import ui
@@ -11,6 +11,7 @@ import ui
 pygame.init()
 screen = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption('108_fool')
+g_screen = GameScreen(screen)
 bg_color = (87, 168, 88)
 back_img = pygame.image.load('Cards_70x105/back.bmp')
 right_arrow = pygame.image.load('Cards_70x105/arrow.png')
@@ -90,6 +91,6 @@ while True:
                            queen_cards, cancel_button, one_card_button)
 
     elif flags.game_over_flag:
-        ui.draw_end_game_screen(bg_color, screen_rect, screen, players, flags, play_again_button, quit_button)
+        ui.draw_end_game_screen(screen_rect, screen, players, flags, g_screen)
     else:
         gf.new_round(play_deck, active_deck, used_deck, players, queen_cards, flags, turn, screen_rect, screen)

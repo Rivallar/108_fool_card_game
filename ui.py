@@ -217,16 +217,16 @@ def draw_everything(bg_color, screen_rect, screen, players, back_img, used_deck,
     pygame.display.flip()
 
 
-def draw_end_game_screen(bg_color, screen_rect, screen, players, flags, play_again_button, quit_button):
-    screen.fill(bg_color)
+def draw_end_game_screen(screen_rect, screen, players, flags, game_screen):
+    screen.fill(game_screen.bg_color)
 
     """Main drawing function for an end-game screen. Delegates sub-tasks to other functions"""
 
     draw_result_points(players, screen_rect, screen, flags.losers)
     draw_loose_score(screen_rect, screen, flags)
 
-    play_again_button.draw_button()
-    quit_button.draw_button()
+    game_screen.play_again_button.draw_button()
+    game_screen.quit_button.draw_button()
     pygame.display.flip()
 
 
