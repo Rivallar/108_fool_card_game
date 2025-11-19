@@ -55,25 +55,25 @@ def draw_active_deck(back_img, screen_rect, screen, deck):
         screen.blit(back_img, back_rect)
 
 
-def draw_active_hand(screen_rect, screen, player, one_card_button, back_img):
+def draw_active_hand(game_screen, player):
 
     """Draws the cards of an active player and one-card button"""
 
     count = len(player.hand)
     hand_width_px = 70 + 20 * (count - 1)
-    start_px = int(screen_rect.centerx - hand_width_px / 2)
+    start_px = int(game_screen.screen_rect.centerx - hand_width_px / 2)
     image_rect = player.hand[0].image.get_rect()
     for i in range(count):
         image_rect.left = start_px + i * 20
-        image_rect.bottom = screen_rect.bottom
+        image_rect.bottom = game_screen.screen_rect.bottom
         if player.hand[i].focus:  # focused card is a bit higher
             image_rect.bottom -= 25
         if not player.bot or game_settings.DEBUG:
-            screen.blit(player.hand[i].image, image_rect)
+            game_screen.screen.blit(player.hand[i].image, image_rect)
         else:
-            screen.blit(back_img, image_rect)
+            game_screen.screen.blit(game_screen.back_img, image_rect)
     if count == 2 and not player.one_card_flag:  # a button to say that one card left appears when a player has 2 cards
-        draw_one_card_button(one_card_button, screen_rect, image_rect)
+        draw_one_card_button(game_screen.one_card_button, game_screen.screen_rect, image_rect)
 
 
 def draw_one_card_button(one_card_button, screen_rect, image_rect):
@@ -100,7 +100,7 @@ def draw_name(screen_rect, screen, player, degree):
     screen.blit(rot_name_image, name_img_rect)
 
 
-def draw_other_hands(screen_rect, screen, players_order, back_img):
+def draw_other_hands(game_screen, players_order):
 
     """Draws cards of other (non-active) players."""
 
@@ -108,21 +108,21 @@ def draw_other_hands(screen_rect, screen, players_order, back_img):
         count = len(player.hand)
         hand_width_px = 70 + 20 * (count - 1)
 
-        start_px = int(screen_rect.centery - hand_width_px / 2)  # to place whole car dset left/right-center
-        other_hand_image = pygame.transform.rotate(back_img, 90)
+        start_px = int(game_screen.screen_rect.centery - hand_width_px / 2)  # to place whole car dset left/right-center
+        other_hand_image = pygame.transform.rotate(game_screen.back_img, 90)
         other_hand_image_rect = other_hand_image.get_rect()
         for i in range(count):
             other_hand_image_rect.top = int(start_px + i * 20)  # each card stacked one on another with a little shift
             if ind == 1:
-                other_hand_image_rect.right = screen_rect.right
+                other_hand_image_rect.right = game_screen.screen_rect.right
                 degree = 90
             else:
                 other_hand_image_rect.left = 0
                 degree = -90
-            screen.blit(other_hand_image, other_hand_image_rect)
-        draw_name(screen_rect, screen, player, degree)
+            game_screen.screen.blit(other_hand_image, other_hand_image_rect)
+        draw_name(game_screen.screen_rect, game_screen.screen, player, degree)
         if player.one_card_flag:
-            draw_hint(other_hand_image_rect, degree, screen)
+            draw_hint(other_hand_image_rect, degree, game_screen.screen)
 
 
 def draw_hint(other_hand_image_rect, degree, screen):
@@ -142,7 +142,7 @@ def draw_hint(other_hand_image_rect, degree, screen):
     screen.blit(hint_img, hint_img_rect)
 
 
-def draw_hands(screen_rect, screen, players, back_img, one_card_button):
+def draw_hands(players, game_screen):
 
     """Determines active player, right- and left-side players and
         delegates drawing to appropriate functions"""
@@ -151,9 +151,9 @@ def draw_hands(screen_rect, screen, players, back_img, one_card_button):
     for ind, player in enumerate(players):
         if player.active_flag:
             act_ind = ind
-            draw_active_hand(screen_rect, screen, player, one_card_button, back_img)
+            draw_active_hand(game_screen, player)
     players_order = players[act_ind + 1:] + players[:act_ind]
-    draw_other_hands(screen_rect, screen, players_order, back_img)
+    draw_other_hands(game_screen, players_order)
 
 
 def draw_arrow(right_arrow, flags, screen_rect, screen):
@@ -203,7 +203,7 @@ def draw_everything(players, used_deck,
     """Main drawing function. Delegate tasks to other functions"""
 
     game_screen.screen.fill(game_screen.bg_color)
-    draw_hands(game_screen.screen_rect, game_screen.screen, players, game_screen.back_img, game_screen.one_card_button)
+    draw_hands(players, game_screen)
     draw_used_deck(used_deck, game_screen.screen_rect, game_screen.screen)
     draw_active_deck(game_screen.back_img, game_screen.screen_rect, game_screen.screen, active_deck)
     draw_arrow(game_screen.right_arrow, flags, game_screen.screen_rect, game_screen.screen)
