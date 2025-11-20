@@ -49,8 +49,7 @@ gf.make_first_turn(turn, game_state)  # first turn in each round starts with a r
 while True:
 
     if turn.player.bot and not game_state.flags.game_over_flag:
-        bot.bot_turn(turn, game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags,
-                     game_state.queen_cards, g_screen)
+        bot.bot_turn(turn, game_state, g_screen)
 
     else:
         gf.check_events(turn, game_state, g_screen)
