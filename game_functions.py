@@ -60,7 +60,7 @@ def bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags):
     flags.queen_choose_flag = False
     flags.first_turn_flag = False
 
-
+# TODO: delete as it is in GameState Class
 def make_queen_cards(screen_rect):
     """Creates special queen cards to choose new suit (Hearts/Diamonds/Clubs/Spades)
         and places them in the center of the screen"""
@@ -127,7 +127,7 @@ def make_first_turn(turn, players, flags, active_deck, used_deck, queen_cards):
         flags.first_turn_flag = False
         end_turn(turn, players, flags)
 
-
+# TODO: delete as it is in GameState class
 def fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags):
 
     """Gives starting hands to players. Checks if the hand is bad. If so, set starting hands again"""
@@ -143,7 +143,7 @@ def fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, 
         reset_decks_and_flags(play_deck, active_deck, used_deck, flags)
         fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags)
 
-
+# TODO: delete as it is in GameState class
 def reset_decks_and_flags(play_deck, active_deck, used_deck, flags):
 
     """Reset decks and game flags"""
@@ -154,7 +154,7 @@ def reset_decks_and_flags(play_deck, active_deck, used_deck, flags):
     used_deck.__init__([])
     flags.reset_flags()
 
-
+# TODO: delete as it is in GameState class
 def check_restart(hand, name):
 
     """Checks for bad starting hand of a player: when all cards of the same suit(ex. Diamonds)
