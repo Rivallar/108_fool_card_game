@@ -1,8 +1,6 @@
-import pygame
 import pygame.font
-import random
-from game_classes import Player, Card, Deck, Turn
-from game_state import GameFlags
+from game_classes import Turn
+from game_state import GameState
 from screens import GameScreen, StartScreen
 import game_functions as gf
 import bot
@@ -36,48 +34,32 @@ while st_screen.props.start_screen_flag:
     pygame.display.flip()
 
 # --------------------------------------------Game preparations-----------------------------------------------------
-# Creating players
-players = [Player(st_screen.props.username_str, bot=False)]
-[players.append(Player(name)) for name in Player.bot_names]
-random.shuffle(players)  # random order each game
-
-# Creating cards and card decks
-play_deck = []  # created once, copied to active_deck each round
-for key in Card.points.keys():
-    for suit in Card.suit_names.keys():
-        play_deck.append(Card(key, suit))
-
-queen_cards = gf.make_queen_cards(screen_rect)  # additional cards for queens cards
-
-active_deck = Deck()
-used_deck = Deck()
-
-flags = GameFlags()
+game_state = GameState(username=st_screen.props.username_str, screen_rect=screen_rect)
 
 # --------------------------------------------Start-round preparations---------------------------------
 
-gf.reset_decks_and_flags(play_deck, active_deck, used_deck, flags)
-gf.fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags)
-turn = Turn(players[0])
-gf.make_first_turn(turn, players, flags, active_deck, used_deck,
-                   queen_cards)  # first turn in each round starts with a random card of first player
+game_state.reset_decks_and_flags()
+game_state.fill_players_hands()
+turn = Turn(game_state.players[0])
+gf.make_first_turn(turn, game_state.players, game_state.flags, game_state.active_deck, game_state.used_deck,
+                   game_state.queen_cards)  # first turn in each round starts with a random card of first player
 
 # -----------------------------------------------------Game cycle------------------------------------
 
 
 while True:
 
-    if turn.player.bot and not flags.game_over_flag:
-        bot.bot_turn(turn, players, used_deck, active_deck, flags,
-                     queen_cards, g_screen)
+    if turn.player.bot and not game_state.flags.game_over_flag:
+        bot.bot_turn(turn, game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags,
+                     game_state.queen_cards, g_screen)
 
     else:
-        gf.check_events(turn, used_deck, players, flags, active_deck, queen_cards, g_screen, play_deck)
+        gf.check_events(turn, game_state.used_deck, game_state.players, game_state.flags, game_state.active_deck, game_state.queen_cards, g_screen, game_state.play_deck)
 
-    if not flags.end_game_flag:
-        ui.draw_everything(players, used_deck, active_deck, flags, queen_cards, g_screen)
+    if not game_state.flags.end_game_flag:
+        ui.draw_everything(game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags, game_state.queen_cards, g_screen)
 
-    elif flags.game_over_flag:
-        ui.draw_end_game_screen(players, flags, g_screen)
+    elif game_state.flags.game_over_flag:
+        ui.draw_end_game_screen(game_state.players, game_state.flags, g_screen)
     else:
-        gf.new_round(play_deck, active_deck, used_deck, players, queen_cards, flags, turn, screen_rect, screen)
+        gf.new_round(game_state.play_deck, game_state.active_deck, game_state.used_deck, game_state.players, game_state.queen_cards, game_state.flags, turn, screen_rect, screen)

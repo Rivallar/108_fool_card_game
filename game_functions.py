@@ -60,21 +60,6 @@ def bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags):
     flags.queen_choose_flag = False
     flags.first_turn_flag = False
 
-# TODO: delete as it is in GameState Class
-def make_queen_cards(screen_rect):
-    """Creates special queen cards to choose new suit (Hearts/Diamonds/Clubs/Spades)
-        and places them in the center of the screen"""
-
-    queen_cards = []
-    for ind, suit in enumerate(Card.suit_names.keys()):
-        card = Card('', suit)  # no value is ok
-        card.rect = card.image.get_rect()
-        card.rect.bottom = screen_rect.centery - 120
-        card.rect.left = screen_rect.centerx - 200 + 100 * ind
-        queen_cards.append(card)
-
-    return queen_cards
-
 
 def end_game_calculations(card, turn):
     """Additional bonuses and penalties when ending a round"""
