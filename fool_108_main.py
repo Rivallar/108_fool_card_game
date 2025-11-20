@@ -55,7 +55,7 @@ while True:
         gf.check_events(turn, game_state, g_screen)
 
     if not game_state.flags.end_game_flag:
-        ui.draw_everything(game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags, game_state.queen_cards, g_screen)
+        ui.draw_everything(game_state, g_screen)
 
     elif game_state.flags.game_over_flag:
         ui.draw_end_game_screen(game_state.players, game_state.flags, g_screen)

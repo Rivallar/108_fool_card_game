@@ -67,6 +67,5 @@ def bot_imitates_human(game_state, g_screen):
 
     """Just a delay as if human thinking."""
 
-    draw_everything(game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags, game_state.queen_cards,
-                    g_screen)
+    draw_everything(game_state, g_screen)
     sleep(game_settings.bot_turn_sleep)

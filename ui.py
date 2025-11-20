@@ -197,21 +197,20 @@ def draw_loose_score(screen_rect, screen, flags):
     screen.blit(flags.loose_score_img, flags.loose_score_rect)
 
 
-def draw_everything(players, used_deck,
-                    active_deck, flags, queen_cards, game_screen):
+def draw_everything(game_state, game_screen):
 
     """Main drawing function. Delegate tasks to other functions"""
 
     game_screen.screen.fill(game_screen.bg_color)
-    draw_hands(players, game_screen)
-    draw_used_deck(used_deck, game_screen.screen_rect, game_screen.screen)
-    draw_active_deck(game_screen.back_img, game_screen.screen_rect, game_screen.screen, active_deck)
-    draw_arrow(game_screen.right_arrow, flags, game_screen.screen_rect, game_screen.screen)
-    draw_loose_score(game_screen.screen_rect, game_screen.screen, flags)
+    draw_hands(game_state.players, game_screen)
+    draw_used_deck(game_state.used_deck, game_screen.screen_rect, game_screen.screen)
+    draw_active_deck(game_screen.back_img, game_screen.screen_rect, game_screen.screen, game_state.active_deck)
+    draw_arrow(game_screen.right_arrow, game_state.flags, game_screen.screen_rect, game_screen.screen)
+    draw_loose_score(game_screen.screen_rect, game_screen.screen, game_state.flags)
 
-    if flags.queen_choose_flag:
-        draw_queen_cards(queen_cards, game_screen.screen_rect, game_screen.screen)
-        if not flags.first_turn_flag:  # at first turn you can`t cancel your choice
+    if game_state.flags.queen_choose_flag:
+        draw_queen_cards(game_state.queen_cards, game_screen.screen_rect, game_screen.screen)
+        if not game_state.flags.first_turn_flag:  # at first turn you can`t cancel your choice
             game_screen.cancel_button.draw_button()
 
     pygame.display.flip()
