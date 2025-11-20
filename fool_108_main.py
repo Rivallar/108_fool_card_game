@@ -1,7 +1,9 @@
 import pygame
 import pygame.font
 import random
-from game_classes import Player, Card, Deck, Turn, GameFlags, StartScreen, GameScreen
+from game_classes import Player, Card, Deck, Turn
+from game_state import GameFlags
+from screens import GameScreen, StartScreen
 import game_functions as gf
 import bot
 import ui
