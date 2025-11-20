@@ -2,6 +2,7 @@ import pygame.font
 from game_classes import Turn
 from game_state import GameState
 from screens import GameScreen, StartScreen
+from event_handlers import start_screen_events, check_events
 import game_functions as gf
 import bot
 import ui
@@ -20,7 +21,7 @@ st_screen = StartScreen(screen)
 
 while st_screen.props.start_screen_flag:
 
-    gf.start_screen_events(st_screen.props, st_screen.quit_but, st_screen.play_but, st_screen.username_field)
+    start_screen_events(st_screen.props, st_screen.quit_but, st_screen.play_but, st_screen.username_field)
     ui.draw_start_screen(st_screen)
 
     if st_screen.props.name_focus:
@@ -52,7 +53,7 @@ while True:
         bot.bot_turn(turn, game_state, g_screen)
 
     else:
-        gf.check_events(turn, game_state, g_screen)
+        check_events(turn, game_state, g_screen)
 
     if not game_state.flags.end_game_flag:
         ui.draw_everything(game_state, g_screen)
