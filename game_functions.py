@@ -73,100 +73,56 @@ def end_game_calculations(card, turn):
         turn.player.round_points += game_settings.one_card_left_penalty
 
 
-def new_round(play_deck, active_deck, used_deck, players, queen_cards, flags, turn, screen_rect, screen):
+def new_round(turn, screen_rect, screen, game_state):
     """Displays round results and resets game for the next round"""
 
-    draw_end_round_screen(screen_rect, screen, players)
+    draw_end_round_screen(screen_rect, screen, game_state.players)
     sleep(10)
-    reset_decks_and_flags(play_deck, active_deck, used_deck, flags)
-    fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags)
-    make_first_turn(turn, players, flags, active_deck, used_deck, queen_cards)
+    game_state.reset_decks_and_flags()
+    game_state.fill_players_hands()
+    make_first_turn(turn, game_state)
 
 
-def make_first_turn(turn, players, flags, active_deck, used_deck, queen_cards):
+def make_first_turn(turn, game_state):
     """Resets some game flags, determines first player of new round and performs first turn
     with a random card automatically"""
 
-    for player in players:
+    for player in game_state.players:
         player.active_flag = False
         player.one_card_flag = False
         player.round_points = 0
 
-    if flags.first_player_ind + 1 < len(players):
-        flags.first_player_ind += 1
+    if game_state.flags.first_player_ind + 1 < len(game_state.players):
+        game_state.flags.first_player_ind += 1
     else:
-        flags.first_player_ind = 0
-    turn.__init__(players[flags.first_player_ind])
+        game_state.flags.first_player_ind = 0
+    turn.__init__(game_state.players[game_state.flags.first_player_ind])
 
     first_card_ind = random.randint(0, len(turn.player.hand) - 1)
     first_card = turn.player.hand[first_card_ind]
-    turn.player.use_card(first_card_ind, used_deck)
+    turn.player.use_card(first_card_ind, game_state.used_deck)
 
     if turn.player.bot and first_card.value == 'Q':  # bot chooses best queen card based on the most expensive card
         most_expensive_card = max(turn.player.hand, key=lambda card: card.points)
-        bot_choose_queen_card(queen_cards, most_expensive_card, used_deck, flags)
+        bot_choose_queen_card(game_state.queen_cards, most_expensive_card, game_state.used_deck, game_state.flags)
     else:
-        check_special(first_card, turn, players, flags, active_deck,
-                      used_deck, queen_cards) 	 	# check for special card properties
+        check_special(first_card, turn, game_state.players, game_state.flags, game_state.active_deck,
+                      game_state.used_deck, game_state.queen_cards) 	 	# check for special card properties
     if not first_card.value == 'Q':
-        flags.first_turn_flag = False
-        end_turn(turn, players, flags)
-
-# TODO: delete as it is in GameState class
-def fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags):
-
-    """Gives starting hands to players. Checks if the hand is bad. If so, set starting hands again"""
-
-    for player in players:
-        player.hand = []
-        player.active_flag = False
-        active_deck.give_card(player, game_settings.start_hand_size, used_deck, queen_cards, flags)
-        need_restart = check_restart(player.hand, player.name)  # check for bad starting hand
-        if need_restart:
-            break
-    if need_restart:
-        reset_decks_and_flags(play_deck, active_deck, used_deck, flags)
-        fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags)
-
-# TODO: delete as it is in GameState class
-def reset_decks_and_flags(play_deck, active_deck, used_deck, flags):
-
-    """Reset decks and game flags"""
-
-    full_deck = play_deck[:]
-    random.shuffle(full_deck)
-    active_deck.__init__(full_deck)
-    used_deck.__init__([])
-    flags.reset_flags()
-
-# TODO: delete as it is in GameState class
-def check_restart(hand, name):
-
-    """Checks for bad starting hand of a player: when all cards of the same suit(ex. Diamonds)
-        and there is no queens"""
-
-    suit_set = set()
-    value_set = set()
-    for card in hand:
-        suit_set.add(card.suit)
-        value_set.add(card.value)
-    if len(suit_set) == 1 and ('Q' not in value_set):
-        if game_settings.DEBUG:
-            print(f'{name} has bad starting hand. Round restart')
-            print(hand)
-        return True
+        game_state.flags.first_turn_flag = False
+        end_turn(turn, game_state.players, game_state.flags)
 
 
-def new_game(players, play_deck, active_deck, used_deck, queen_cards, flags, turn):
+def new_game(game_state, turn):
 
     """Starts new game (not a new round)"""
 
-    for player in players:
+    for player in game_state.players:
         player.total_points = 0
-    random.shuffle(players)
-    reset_decks_and_flags(play_deck, active_deck, used_deck, flags)
-    fill_players_hands(players, play_deck, active_deck, used_deck, queen_cards, flags)
-    make_first_turn(turn, players, flags, active_deck, used_deck, queen_cards)
+    random.shuffle(game_state.players)
+    game_state.reset_decks_and_flags()
+    game_state.fill_players_hands()
+    make_first_turn(turn, game_state)
 
 
 
@@ -303,8 +259,7 @@ def queen_turn(turn, used_deck, players, flags, queen_cards, cancel_button, mous
             end_turn(turn, players, flags)
 
 
-def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
-                 game_screen, play_deck):
+def check_events(turn, game_state, game_screen):
 
     """Main event function. Looks for players keyboard/mouse actions"""
 
@@ -314,24 +269,22 @@ def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
                 sys.exit()
-        if flags.queen_choose_flag:  # choose special queen card
+        if game_state.flags.queen_choose_flag:  # choose special queen card
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                queen_turn(turn, used_deck, players, flags, queen_cards,
+                queen_turn(turn, game_state.used_deck, game_state.players, game_state.flags, game_state.queen_cards,
                            game_screen.cancel_button, mouse_x, mouse_y)
 
-        if flags.game_over_flag:  # when game is over
+        if game_state.flags.game_over_flag:  # when game is over
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if game_screen.quit_button.rect.collidepoint(mouse_x, mouse_y):
                     sys.exit()
                 if game_screen.play_again_button.rect.collidepoint(mouse_x, mouse_y):
-                    new_game(players, play_deck, active_deck, used_deck,
-                             queen_cards, flags, turn)
+                    new_game(game_state, turn)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:  # hotkey to play
-                    new_game(players, play_deck, active_deck, used_deck,
-                             queen_cards, flags, turn)
+                    new_game(game_state, turn)
         else:
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_RIGHT, pygame.K_LEFT):  # navigate through cards in hand
@@ -342,15 +295,15 @@ def check_events(turn, used_deck, players, flags, active_deck, queen_cards,
                         turn.player.one_card_flag = True
 
                 elif event.key == pygame.K_RETURN:  # use a card in focus card
-                    make_turn(turn, players, flags, active_deck,
-                              used_deck, queen_cards)
+                    make_turn(turn, game_state.players, game_state.flags, game_state.active_deck,
+                              game_state.used_deck, game_state.queen_cards)
 
                 elif event.key == pygame.K_SPACE:  # draw a card or end a turn
                     if turn.card_taken_flag:
-                        end_turn(turn, players, flags)
+                        end_turn(turn, game_state.players, game_state.flags)
                     else:
-                        turn.player.take_card(active_deck, used_deck,
-                                              queen_cards, flags)
+                        turn.player.take_card(game_state.active_deck, game_state.used_deck,
+                                              game_state.queen_cards, game_state.flags)
                         turn.card_taken_flag = True  # you can draw 1 card from deck once per turn
                         turn.player.one_card_flag = False
                         focus_change(turn, len(turn.player.hand) - 1)

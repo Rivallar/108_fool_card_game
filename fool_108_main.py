@@ -41,8 +41,7 @@ game_state = GameState(username=st_screen.props.username_str, screen_rect=screen
 game_state.reset_decks_and_flags()
 game_state.fill_players_hands()
 turn = Turn(game_state.players[0])
-gf.make_first_turn(turn, game_state.players, game_state.flags, game_state.active_deck, game_state.used_deck,
-                   game_state.queen_cards)  # first turn in each round starts with a random card of first player
+gf.make_first_turn(turn, game_state)  # first turn in each round starts with a random card of first player
 
 # -----------------------------------------------------Game cycle------------------------------------
 
@@ -54,7 +53,7 @@ while True:
                      game_state.queen_cards, g_screen)
 
     else:
-        gf.check_events(turn, game_state.used_deck, game_state.players, game_state.flags, game_state.active_deck, game_state.queen_cards, g_screen, game_state.play_deck)
+        gf.check_events(turn, game_state, g_screen)
 
     if not game_state.flags.end_game_flag:
         ui.draw_everything(game_state.players, game_state.used_deck, game_state.active_deck, game_state.flags, game_state.queen_cards, g_screen)
@@ -62,4 +61,4 @@ while True:
     elif game_state.flags.game_over_flag:
         ui.draw_end_game_screen(game_state.players, game_state.flags, g_screen)
     else:
-        gf.new_round(game_state.play_deck, game_state.active_deck, game_state.used_deck, game_state.players, game_state.queen_cards, game_state.flags, turn, screen_rect, screen)
+        gf.new_round(turn, screen_rect, screen, game_state)
