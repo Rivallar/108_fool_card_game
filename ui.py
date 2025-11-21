@@ -62,14 +62,14 @@ def draw_active_hand(game_screen, player):
     count = len(player.hand)
     hand_width_px = 70 + 20 * (count - 1)
     start_px = int(game_screen.screen_rect.centerx - hand_width_px / 2)
-    image_rect = player.hand[0].image.get_rect()
+    image_rect = game_screen.back_img.get_rect()
     for i in range(count):
         image_rect.left = start_px + i * 20
         image_rect.bottom = game_screen.screen_rect.bottom
         if player.hand[i].focus:  # focused card is a bit higher
             image_rect.bottom -= 25
         if not player.bot or game_settings.DEBUG:
-            game_screen.screen.blit(player.hand[i].image, image_rect)
+            game_screen.screen.blit(game_screen.card_images[player.hand[i].name], image_rect)
         else:
             game_screen.screen.blit(game_screen.back_img, image_rect)
     if count == 2 and not player.one_card_flag:  # a button to say that one card left appears when a player has 2 cards

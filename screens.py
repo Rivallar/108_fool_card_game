@@ -111,8 +111,14 @@ class GameScreen:
         self.screen_rect = self.screen.get_rect()
         self.bg_color = (87, 168, 88)
         self.back_img = pygame.image.load('Cards_70x105/back.bmp')
+        self.card_images: dict = {}
         self.right_arrow = pygame.image.load('Cards_70x105/arrow.png')
         self.cancel_button = Button(screen, 'Cancel', 200, 50, (255, 0, 0))
         self.one_card_button = Button(screen, 'One!', 100, 50, (255, 0, 0))
         self.play_again_button = Button(screen, 'Play again', 200, 50, (255, 0, 0), shift=(-70, 50))
         self.quit_button = Button(screen, 'Quit', 100, 60, (255, 0, 0), shift=(150, 50))
+
+    def upload_card_images(self, card_names: list[str]) -> None:
+        """Loads card images to pygame to render them later"""
+        for card_name in card_names:
+            self.card_images[card_name] = pygame.image.load(f'Cards_70x105/{card_name}.bmp')
