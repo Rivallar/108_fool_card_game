@@ -66,6 +66,7 @@ class GameState:
                 play_deck.append(Card(key, suit))
         return play_deck
 
+    # TODO: remove graphic part
     @staticmethod
     def make_queen_cards(screen_rect) -> list[Card]:
         """Creates special queen cards to choose new suit (Hearts/Diamonds/Clubs/Spades)

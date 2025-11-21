@@ -21,23 +21,23 @@ def draw_start_screen(st_screen):
                        st_screen.screen_rect.left + 50, st_screen.screen_rect.bottom - 50 - ind * 50, st_screen.screen)
 
 
-def draw_used_deck(deck, screen_rect, screen):
+def draw_used_deck(deck, game_screen):
 
     """Displays 2 latest cards of the used deck"""
 
     bot_rect = deck.cards[-1].image.get_rect()
-    bot_rect.centerx = screen_rect.centerx - 100
-    bot_rect.centery = screen_rect.centery + 5
+    bot_rect.centerx = game_screen.screen_rect.centerx - 100
+    bot_rect.centery = game_screen.screen_rect.centery + 5
 
     top_rect = deck.cards[-1].image.get_rect()
-    top_rect.centerx = screen_rect.centerx - 85
-    top_rect.centery = screen_rect.centery
+    top_rect.centerx = game_screen.screen_rect.centerx - 85
+    top_rect.centery = game_screen.screen_rect.centery
 
     if len(deck.cards) > 1:
         if len(deck.cards) % 2 == 0:
             bot_rect, top_rect = top_rect, bot_rect  # a bit of alternative animation
-        screen.blit(deck.cards[-2].image, bot_rect)
-    screen.blit(deck.cards[-1].image, top_rect)
+        game_screen.screen.blit(game_screen.card_images[deck.cards[-2].name], bot_rect)
+    game_screen.screen.blit(game_screen.card_images[deck.cards[-1].name], top_rect)
 
 
 def draw_active_deck(back_img, screen_rect, screen, deck):
@@ -108,7 +108,7 @@ def draw_other_hands(game_screen, players_order):
         count = len(player.hand)
         hand_width_px = 70 + 20 * (count - 1)
 
-        start_px = int(game_screen.screen_rect.centery - hand_width_px / 2)  # to place whole car dset left/right-center
+        start_px = int(game_screen.screen_rect.centery - hand_width_px / 2)  # to place whole cardset left/right-center
         other_hand_image = pygame.transform.rotate(game_screen.back_img, 90)
         other_hand_image_rect = other_hand_image.get_rect()
         for i in range(count):
@@ -203,7 +203,7 @@ def draw_everything(game_state, game_screen):
 
     game_screen.screen.fill(game_screen.bg_color)
     draw_hands(game_state.players, game_screen)
-    draw_used_deck(game_state.used_deck, game_screen.screen_rect, game_screen.screen)
+    draw_used_deck(game_state.used_deck, game_screen)
     draw_active_deck(game_screen.back_img, game_screen.screen_rect, game_screen.screen, game_state.active_deck)
     draw_arrow(game_screen.right_arrow, game_state.flags, game_screen.screen_rect, game_screen.screen)
     draw_loose_score(game_screen.screen_rect, game_screen.screen, game_state.flags)
