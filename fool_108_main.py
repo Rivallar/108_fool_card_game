@@ -12,7 +12,6 @@ pygame.init()
 screen = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption('108_fool')
 g_screen = GameScreen(screen)
-
 screen_rect = screen.get_rect()
 
 # ------------------------------------------Start screen (to enter username)---------------------------------------

@@ -1,6 +1,7 @@
 import pygame
 
 import game_settings
+from game_classes import Card
 
 
 def draw_start_screen(st_screen):
@@ -168,13 +169,15 @@ def draw_arrow(right_arrow, flags, screen_rect, screen):
     screen.blit(right_arrow, arrow_rect)
 
 
-def draw_queen_cards(queen_cards, screen_rect, screen):
+def draw_queen_cards(game_screen):
 
     """Draws shaded screen with special cards to choose when a player uses queen card"""
 
-    draw_shade_surf(screen_rect, screen)
-    for card in queen_cards:
-        screen.blit(card.image, card.rect)
+    draw_shade_surf(game_screen.screen_rect, game_screen.screen)
+    suits = Card.suit_names.values()
+    spec_card_images = [game_screen.card_images[suit] for suit in suits]
+    for card in zip(spec_card_images, game_screen.spec_card_rects):
+        game_screen.screen.blit(card[0], card[1])
 
 
 def draw_shade_surf(screen_rect, screen):
@@ -209,7 +212,7 @@ def draw_everything(game_state, game_screen):
     draw_loose_score(game_screen.screen_rect, game_screen.screen, game_state.flags)
 
     if game_state.flags.queen_choose_flag:
-        draw_queen_cards(game_state.queen_cards, game_screen.screen_rect, game_screen.screen)
+        draw_queen_cards(game_screen)
         if not game_state.flags.first_turn_flag:  # at first turn you can`t cancel your choice
             game_screen.cancel_button.draw_button()
 

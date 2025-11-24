@@ -79,7 +79,6 @@ class GameState:
             card.rect.bottom = screen_rect.centery - 120
             card.rect.left = screen_rect.centerx - 200 + 100 * ind
             queen_cards.append(card)
-
         return queen_cards
 
     def reset_decks_and_flags(self):
