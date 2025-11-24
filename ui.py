@@ -26,11 +26,11 @@ def draw_used_deck(deck, game_screen):
 
     """Displays 2 latest cards of the used deck"""
 
-    bot_rect = deck.cards[-1].image.get_rect()
+    bot_rect = game_screen.back_img.get_rect()
     bot_rect.centerx = game_screen.screen_rect.centerx - 100
     bot_rect.centery = game_screen.screen_rect.centery + 5
 
-    top_rect = deck.cards[-1].image.get_rect()
+    top_rect = game_screen.back_img.get_rect()
     top_rect.centerx = game_screen.screen_rect.centerx - 85
     top_rect.centery = game_screen.screen_rect.centery
 

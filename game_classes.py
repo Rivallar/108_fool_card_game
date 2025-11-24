@@ -18,7 +18,6 @@ class Card:
             self.name = self.value + self.suit
         else:
             self.name = Card.suit_names[self.suit]  # special queen cards have no value and points
-        self.image = pygame.image.load(f'Cards_70x105/{self.name}.bmp')
         self.focus = False  # to focus on a card in a player hand
 
     def __repr__(self):
