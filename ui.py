@@ -91,7 +91,7 @@ def draw_name(screen_rect, screen, player, degree):
 
     """Draws players name"""
 
-    rot_name_image = pygame.transform.rotate(player.name_img, degree)
+    rot_name_image = pygame.transform.rotate(player, degree)
     name_img_rect = rot_name_image.get_rect()
     name_img_rect.centery = screen_rect.centery
     if degree == -90:  # rotation for left- and right-side players
@@ -121,7 +121,7 @@ def draw_other_hands(game_screen, players_order):
                 other_hand_image_rect.left = 0
                 degree = -90
             game_screen.screen.blit(other_hand_image, other_hand_image_rect)
-        draw_name(game_screen.screen_rect, game_screen.screen, player, degree)
+        draw_name(game_screen.screen_rect, game_screen.screen, game_screen.username_images[player.name], degree)
         if player.one_card_flag:
             draw_hint(other_hand_image_rect, degree, game_screen.screen)
 

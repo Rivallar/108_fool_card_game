@@ -88,12 +88,6 @@ class Player:
         self.total_points = 0
         self.round_points = 0
 
-        # Drawing name
-        self.text_color = (240, 240, 0)
-        self.back_color = (0, 100, 175)
-        self.font = pygame.font.SysFont(None, 36)
-        self.name_img = self.font.render(self.name, True, self.text_color, self.back_color)
-
     def choose_useful_cards(self, used_deck_last_card):
 
         """To determine best card for bot turn"""
