@@ -110,9 +110,15 @@ class GameScreen:
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
         self.bg_color = (87, 168, 88)
+
+        self.text_color = (240, 240, 0)
+        self.back_color = (0, 100, 175)
+        self.font = pygame.font.SysFont(None, 36)
+        self.username_images: dict = {}
+
         self.back_img = pygame.image.load('Cards_70x105/back.bmp')
         self.card_images: dict = {}
-        self.queen_card_rects: list = self.get_queen_cards_positions()                # queen cards when choosing a suit
+        self.queen_card_rects: list = self.get_queen_cards_positions()            # queen cards when choosing a suit
         self.right_arrow = pygame.image.load('Cards_70x105/arrow.png')
         self.cancel_button = Button(screen, 'Cancel', 200, 50, (255, 0, 0))
         self.one_card_button = Button(screen, 'One!', 100, 50, (255, 0, 0))
@@ -125,7 +131,7 @@ class GameScreen:
             self.card_images[card_name] = pygame.image.load(f'Cards_70x105/{card_name}.bmp')
 
     def get_queen_cards_positions(self) -> list:
-        """Counts special queen card positions on a screen when chosing a new card suit"""
+        """Counts special queen card positions on a screen when choosing a new card suit"""
 
         positions = []
         for i in range(4):
@@ -134,3 +140,8 @@ class GameScreen:
             card_rect.left = self.screen_rect.centerx - 200 + 100 * i
             positions.append(card_rect)
         return positions
+
+    def render_usernames(self, usernames: list[str]):
+        """Turns usernames into rendered images"""
+        for username in usernames:
+            self.username_images[username] = self.font.render(username, True, self.text_color, self.back_color)

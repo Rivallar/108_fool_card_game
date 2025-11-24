@@ -36,6 +36,7 @@ while st_screen.props.start_screen_flag:
 # --------------------------------------------Game preparations-----------------------------------------------------
 game_state = GameState(username=st_screen.props.username_str, screen_rect=screen_rect)
 g_screen.upload_card_images(card_names=[card.name for card in game_state.play_deck + game_state.queen_cards])
+g_screen.render_usernames(usernames=[player.name for player in game_state.players])
 
 # --------------------------------------------Start-round preparations---------------------------------
 
