@@ -1,5 +1,3 @@
-import pygame
-import pygame.font
 import random
 import game_settings
 
