@@ -112,7 +112,7 @@ class GameScreen:
         self.bg_color = (87, 168, 88)
         self.back_img = pygame.image.load('Cards_70x105/back.bmp')
         self.card_images: dict = {}
-        self.spec_card_rects: list = self.get_spec_cards_positions()                # queen cards when choosing a suit
+        self.queen_card_rects: list = self.get_queen_cards_positions()                # queen cards when choosing a suit
         self.right_arrow = pygame.image.load('Cards_70x105/arrow.png')
         self.cancel_button = Button(screen, 'Cancel', 200, 50, (255, 0, 0))
         self.one_card_button = Button(screen, 'One!', 100, 50, (255, 0, 0))
@@ -124,7 +124,7 @@ class GameScreen:
         for card_name in card_names:
             self.card_images[card_name] = pygame.image.load(f'Cards_70x105/{card_name}.bmp')
 
-    def get_spec_cards_positions(self) -> list:
+    def get_queen_cards_positions(self) -> list:
         """Counts special queen card positions on a screen when chosing a new card suit"""
 
         positions = []

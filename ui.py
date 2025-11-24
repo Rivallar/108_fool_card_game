@@ -176,7 +176,7 @@ def draw_queen_cards(game_screen):
     draw_shade_surf(game_screen.screen_rect, game_screen.screen)
     suits = Card.suit_names.values()
     spec_card_images = [game_screen.card_images[suit] for suit in suits]
-    for card in zip(spec_card_images, game_screen.spec_card_rects):
+    for card in zip(spec_card_images, game_screen.queen_card_rects):
         game_screen.screen.blit(card[0], card[1])
 
 

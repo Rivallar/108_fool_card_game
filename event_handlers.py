@@ -57,8 +57,7 @@ def check_events(turn, game_state, game_screen):
         if game_state.flags.queen_choose_flag:  # choose special queen card
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                gf.queen_turn(turn, game_state.used_deck, game_state.players, game_state.flags, game_state.queen_cards,
-                           game_screen.cancel_button, mouse_x, mouse_y)
+                gf.queen_turn(turn, game_state, game_screen, mouse_x, mouse_y)
 
         if game_state.flags.game_over_flag:  # when game is over
             if event.type == pygame.MOUSEBUTTONDOWN:

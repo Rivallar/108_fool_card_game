@@ -202,17 +202,18 @@ def make_turn(turn, players, flags, active_deck, used_deck, queen_cards):
             end_turn(turn, players, flags)
 
 
-def queen_turn(turn, used_deck, players, flags, queen_cards, cancel_button, mouse_x, mouse_y):
+def queen_turn(turn, game_state, game_screen, mouse_x, mouse_y):
 
     """Adds a chosen special queen card to the used deck or returns queen card to a hand of an active player."""
 
-    if cancel_button.rect.collidepoint(mouse_x, mouse_y) and not flags.first_turn_flag:
-        flags.queen_choose_flag = False
-        used_deck.give_card(turn.player, 1, used_deck, queen_cards, flags, reverse=True)
+    if game_screen.cancel_button.rect.collidepoint(mouse_x, mouse_y) and not game_state.flags.first_turn_flag:
+        game_state.flags.queen_choose_flag = False
+        game_state.used_deck.give_card(turn.player, 1, game_state.used_deck, game_state.queen_cards, game_state.flags,
+                                       reverse=True)
         turn.reset_focus()
-    for card in queen_cards:
-        if card.rect.collidepoint(mouse_x, mouse_y):
-            used_deck.cards.append(card)
-            flags.queen_choose_flag = False
-            flags.first_turn_flag = False
-            end_turn(turn, players, flags)
+    for card_rect, card in zip(game_screen.queen_card_rects, game_state.queen_cards):
+        if card_rect.collidepoint(mouse_x, mouse_y):
+            game_state.used_deck.cards.append(card)
+            game_state.flags.queen_choose_flag = False
+            game_state.flags.first_turn_flag = False
+            end_turn(turn, game_state.players, game_state.flags)
